@@ -1,0 +1,15 @@
+provider_name = "codex"
+model = "gpt-5.4"
+model_reasoning_effort = "xhigh"
+disable_response_storage = false
+personality = "friendly"
+
+model_context_window = 1000000
+model_auto_compact_token_limit = 900000
+
+[model_providers.codex]
+name = "codex"
+base_url = "https://api.vip1129.cc"
+wire_api = "responses"
+requires_openai_auth = true
+api_key = ""

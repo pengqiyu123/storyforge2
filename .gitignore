@@ -1,0 +1,11 @@
+.pytest_cache/
+.ruff_cache/
+__pycache__/
+*.pyc
+*.pyo
+*.db
+
+books/
+
+config/storyforge2.toml
+config/storyforge2.local.toml
