@@ -164,6 +164,8 @@ class TruthExtractorAdapter:
         hook_updates = []
         for index, item in enumerate(normalized.get("hook_updates", []), start=1):
             if isinstance(item, dict) and "hook_id" in item:
+                if "status" in item:
+                    item = {**item, "status": self._normalize_hook_status(item.get("status"))}
                 hook_updates.append(item)
                 continue
             if isinstance(item, dict):
@@ -173,7 +175,7 @@ class TruthExtractorAdapter:
                         "hook_id": f"hook-ch{chapter_no:04d}-{index}",
                         "label": label,
                         "kind": "hook",
-                        "status": item.get("status", "open"),
+                        "status": self._normalize_hook_status(item.get("status", "open")),
                         "introduced_in": chapter_no,
                         "owner_entity_ids": [],
                         "source_fact_ids": [],
@@ -194,4 +196,22 @@ class TruthExtractorAdapter:
         normalized["notes"] = [
             item for item in normalized.get("notes", []) if isinstance(item, str) and item.strip()
         ]
+        return normalized
+
+    @staticmethod
+    def _normalize_hook_status(status: object) -> str:
+        normalized = str(status or "open").strip().lower()
+        mapping = {
+            "partially_resolved": "advanced",
+            "partial": "advanced",
+            "in_progress": "advanced",
+            "progressed": "advanced",
+            "closed": "resolved",
+            "done": "resolved",
+            "abandoned": "invalidated",
+            "cancelled": "invalidated",
+        }
+        normalized = mapping.get(normalized, normalized)
+        if normalized not in {"open", "advanced", "resolved", "invalidated"}:
+            return "open"
         return normalized

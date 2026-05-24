@@ -29,7 +29,7 @@ def apply_truth_delta_to_snapshot_payloads(
 
     characters["characters"].extend(item.model_dump(mode="json") for item in truth_delta.proposed_character_updates)
     characters["characters"] = dedupe_by_id(characters["characters"], "character_id")
-    characters["relationships"].extend(item for item in truth_delta.proposed_relationship_updates)
+    characters["relationships"].extend(item.model_dump(mode="json") for item in truth_delta.proposed_relationship_updates)
     characters["relationships"] = dedupe_by_id(characters["relationships"], "edge_id")
 
     hook_ledger["hooks"].extend(item.model_dump(mode="json") for item in truth_delta.proposed_hook_updates)

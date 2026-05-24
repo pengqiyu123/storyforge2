@@ -138,6 +138,7 @@ class ChapterWorkflowService:
             audit_payload = self.optional_artifact_payload(book_id, status.current_artifact_refs.get("audit")) or {}
             mechanical_payload = self.optional_artifact_payload(book_id, status.current_artifact_refs.get("mechanical_gate")) or {}
             truth_delta_payload = self.optional_artifact_payload(book_id, status.current_artifact_refs.get("truth_delta")) or {}
+            style_signal_payload = self.optional_artifact_payload(book_id, status.current_artifact_refs.get("style_signal")) or {}
             failed_rule_messages = [
                 str(rule.get("message", "")).strip()
                 for rule in mechanical_payload.get("rule_results", [])
@@ -163,13 +164,18 @@ class ChapterWorkflowService:
                 for item in truth_delta_payload.get("conflicts", [])
                 if isinstance(item, dict) and str(item.get("message", "")).strip()
             ]
+            style_drift_messages = [
+                f"style_drift:{axis}"
+                for axis in style_signal_payload.get("dominant_drift_axes", [])
+                if str(axis).strip()
+            ]
             text = self.writer.generate_revision(
                 chapter_no=chapter_no,
                 plan_payload=plan_payload,
                 compose_payload=compose_payload,
                 truth_context_slice=truth_context_slice,
                 revision_brief=brief_payload,
-                failed_rule_messages=failed_rule_messages,
+                failed_rule_messages=failed_rule_messages + style_drift_messages,
                 top_audit_issues=top_audit_issues,
                 low_dimensions=low_dimensions,
                 truth_conflict_messages=truth_conflict_messages,
@@ -264,8 +270,8 @@ class ChapterWorkflowService:
         status = self.repo.load_chapter_status(book_id, chapter_no)
         self._assert_not_frozen(status, "revise")
         self.truth_service._assert_truth_fresh_for_action(book_id, chapter_no, "revise")
-        if status.stage != ChapterStage.AUDITED_FAILED:
-            raise ValueError("revise_chapter requires audited_failed stage")
+        if status.stage not in {ChapterStage.AUDITED_FAILED, ChapterStage.ROLLED_BACK, ChapterStage.HUMAN_REVIEW_REQUIRED}:
+            raise ValueError("revise_chapter requires audited_failed, rolled_back, or human_review_required stage")
         if status.revision_round >= self.max_revision_rounds:
             run = self.start_run(book_id, chapter_no, RunAction.REVISE.value, "reviser", [])
             escalated = next_status(

@@ -130,8 +130,8 @@ def detect_character_conflicts(
                 TruthConflictRecord(
                     conflict_id=f"conflict-location-{character.character_id}-{chapter_no}",
                     category="character_location_conflict",
-                    severity="blocking",
-                    message=f"角色 {character.character_id} 的当前位置与已提交真相冲突",
+                    severity="warning",
+                    message=f"角色 {character.character_id} 位置从 {previous['current_location']} 变更为 {character.current_location}",
                     source_ref=draft_artifact_id,
                 )
             )

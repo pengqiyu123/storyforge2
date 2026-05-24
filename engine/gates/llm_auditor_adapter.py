@@ -94,33 +94,69 @@ class LLMAuditorAdapter:
                 key in normalized_scores
                 for key in {
                     "clarity",
+                    "coherence",
+                    "plot_coherence",
                     "tone_fit",
                     "character_motivation",
+                    "characterization",
                     "voice",
                     "risk",
                     "readability",
+                    "language_fluency",
                     "atmosphere",
                     "tension",
+                    "suspense",
+                    "plot_tension",
+                    "ending_hook",
+                    "constraint_fit",
+                    "style",
+                    "style_fit",
+                    "continuity",
                 }
             )
             if can_infer_core_dimensions:
-                normalized_scores["logic"] = normalized_scores.get("logic", normalized_scores.get("clarity", overall))
+                normalized_scores["logic"] = normalized_scores.get(
+                    "logic",
+                    normalized_scores.get(
+                        "plot_coherence",
+                        normalized_scores.get("coherence", normalized_scores.get("clarity", normalized_scores.get("continuity", overall))),
+                    ),
+                )
                 normalized_scores["character"] = normalized_scores.get(
                     "character",
                     normalized_scores.get(
                         "character_motivation",
-                        normalized_scores.get("voice", normalized_scores.get("tone_fit", overall)),
+                        normalized_scores.get(
+                            "characterization",
+                            normalized_scores.get("voice", normalized_scores.get("tone_fit", overall)),
+                        ),
                     ),
                 )
                 normalized_scores["hook"] = normalized_scores.get(
                     "hook",
                     normalized_scores.get(
-                        "atmosphere",
-                        normalized_scores.get("tension", normalized_scores.get("risk", overall)),
+                        "ending_hook",
+                        normalized_scores.get(
+                            "suspense",
+                            normalized_scores.get(
+                                "plot_tension",
+                                normalized_scores.get("atmosphere", normalized_scores.get("tension", normalized_scores.get("risk", overall))),
+                            ),
+                        ),
                     ),
                 )
                 normalized_scores["pace"] = normalized_scores.get(
-                    "pace", normalized_scores.get("readability", normalized_scores.get("risk", overall))
+                    "pace",
+                    normalized_scores.get(
+                        "language_fluency",
+                        normalized_scores.get(
+                            "style_fit",
+                            normalized_scores.get(
+                                "style",
+                                normalized_scores.get("constraint_fit", normalized_scores.get("readability", normalized_scores.get("risk", overall))),
+                            ),
+                        ),
+                    ),
                 )
             payload["score_summary"] = normalized_scores
         issues = payload.get("issues")

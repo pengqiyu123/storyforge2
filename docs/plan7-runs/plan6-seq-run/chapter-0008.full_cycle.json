@@ -1,0 +1,38 @@
+{
+  "chapter_no": 8,
+  "book_id": "plan6-seq-run",
+  "final_stage": "exported",
+  "final_outcome": "exported",
+  "approved": true,
+  "exported": true,
+  "revision_rounds_executed": 0,
+  "comparison_history": [],
+  "last_gate_reasons": [
+    "gate:passed"
+  ],
+  "last_truth_delta_notes": [
+    "extraction_failed:HTTP Error 502: Bad Gateway"
+  ],
+  "style_drift_axes": [],
+  "audit_diagnostics_history": [
+    {
+      "mode_used": "text_fallback",
+      "primary_error": "HTTP Error 502: Bad Gateway",
+      "fallback_error": null,
+      "raw_excerpt": "{\"passed\":true,\"critical_count\":0,\"issues\":[{\"severity\":\"minor\",\"type\":\"continuity\",\"location\":\"中后段“姓谢”的指代\",\"description\":\"“那名‘姓谢’的男人”与前文“谢衡”并置，可能让读者瞬间犹疑二者是否为同一人或故意冒名顶替。当前悬念可成立，但建议后续尽快澄清。\",\"suggestion\":\"后续一两章内补一个明确锚点，例如警方口径区分“登记名姓谢者”与“谢衡本人/失踪者”。\"},{\"severity\":\"minor\",\"type\":\"logic\",\"location\":\"“车动半尺",
+      "request_bytes": 11933
+    }
+  ],
+  "truth_diagnostics_history": [
+    {
+      "mode_used": "text_fallback",
+      "primary_error": "HTTP Error 502: Bad Gateway",
+      "fallback_error": "error: HTTP Error 504: Gateway Time-out",
+      "raw_excerpt": null,
+      "request_bytes": 54666
+    }
+  ],
+  "error": null,
+  "approval_receipt_artifact_id": "0008-approval_receipt-08702116",
+  "export_manifest_artifact_id": "0008-export_manifest-e0bce39a"
+}

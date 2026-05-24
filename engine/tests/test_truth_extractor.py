@@ -105,6 +105,33 @@ class TruthExtractorAdapterTests(unittest.TestCase):
         self.assertEqual(result["hook_updates"][0]["status"], "open")
         self.assertEqual(result["chapter_irreversible_facts"], ["fact-2"])
 
+    def test_hook_status_variants_are_normalized(self) -> None:
+        provider = FakeLLMProvider(
+            json_responses=[
+                {
+                    "fact_assertions": [],
+                    "proposed_fact_updates": [],
+                    "character_updates": [],
+                    "relationship_updates": [],
+                    "hook_updates": [
+                        {"hook": "旧账册缺页", "status": "partially_resolved"},
+                        {"hook_id": "hook-2", "label": "黑伞男人身份", "kind": "hook", "status": "closed"},
+                    ],
+                    "chapter_irreversible_facts": [],
+                    "notes": [],
+                }
+            ]
+        )
+        adapter = TruthExtractorAdapter(provider)
+        result = adapter.extract(
+            book_id="book-a",
+            chapter_no=2,
+            draft_text="林七逐步拼出线索。",
+            truth_snapshot={"snapshot_id": "snapshot-0001"},
+        )
+        self.assertEqual(result["hook_updates"][0]["status"], "advanced")
+        self.assertEqual(result["hook_updates"][1]["status"], "resolved")
+
 
 if __name__ == "__main__":
     unittest.main()

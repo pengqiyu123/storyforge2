@@ -210,6 +210,94 @@ class GateRunnerChineseTests(unittest.TestCase):
         self.assertEqual(audit.issues[0].category, "节奏拖慢")
         self.assertEqual(audit.issues[1].severity, "warning")
 
+    def test_workspace_report_and_meta_terms_are_detected(self) -> None:
+        runner = GateRunner(auditor=PassingAuditor())
+        draft_text = (
+            "这一段正文已经满足最小字数。"
+            "核心动机需要和当前处境一起交代清楚。"
+            "到这里算是完成了第一步推进，读者可能已经意识到风险。"
+        ) + ("林七在仓库里压低呼吸，贴着墙根向前走。" * 120)
+        bundle = GateInputBundle(
+            book_id="book-a",
+            chapter_no=1,
+            revision_round=0,
+            settlement_artifact_id="settlement-1",
+            candidate_signature="sig-1",
+            draft_text=draft_text,
+            plan_summary="推进冲突",
+            compose_constraints=["保持悬念"],
+            baseline_gate_summary={},
+            revision_mode=None,
+        )
+        mechanical, _, _ = runner.evaluate(bundle)
+        report_rule = next(result for result in mechanical.rule_results if result.rule_id == "report_term_leak")
+        meta_rule = next(result for result in mechanical.rule_results if result.rule_id == "meta_narration_patterns")
+        self.assertFalse(report_rule.passed)
+        self.assertFalse(meta_rule.passed)
+        self.assertIn("核心动机", report_rule.evidence)
+        self.assertIn("到这里算是", meta_rule.evidence)
+
+    def test_workspace_forbidden_but_rather_pattern_is_not_yet_mechanical_block(self) -> None:
+        runner = GateRunner(auditor=PassingAuditor())
+        draft_text = "不是他没看见，而是他故意把视线从林七身上滑开。" + ("林七沿着墙根前行。" * 400)
+        bundle = GateInputBundle(
+            book_id="book-a",
+            chapter_no=1,
+            revision_round=0,
+            settlement_artifact_id="settlement-1",
+            candidate_signature="sig-1",
+            draft_text=draft_text,
+            plan_summary="推进冲突",
+            compose_constraints=["保持悬念"],
+            baseline_gate_summary={},
+            revision_mode=None,
+        )
+        mechanical, _, gate = runner.evaluate(bundle)
+        forbidden_rule = next(result for result in mechanical.rule_results if result.rule_id == "forbidden_patterns")
+        self.assertTrue(forbidden_rule.passed)
+        self.assertFalse(mechanical.blocked)
+        self.assertTrue(gate.passed)
+
+    def test_llm_auditor_adapter_normalizes_plan7_dimension_names(self) -> None:
+        provider = FakeLLMProvider(
+            json_responses=[
+                {
+                    "passed": True,
+                    "critical_count": 0,
+                    "issues": [],
+                    "recommended_mode": "continue",
+                    "score_summary": {
+                        "overall": 94,
+                        "plot_coherence": 93,
+                        "tension": 96,
+                        "ending_hook": 97,
+                        "language_fluency": 91,
+                    },
+                }
+            ]
+        )
+        adapter = LLMAuditorAdapter(provider)
+        audit = adapter.review(
+            GateInputBundle(
+                book_id="book-a",
+                chapter_no=9,
+                revision_round=0,
+                settlement_artifact_id="settlement-9",
+                candidate_signature="sig-9",
+                draft_text=long_chinese_draft(),
+                plan_summary="推进冲突",
+                compose_constraints=["保持悬念"],
+                baseline_gate_summary={},
+                revision_mode=None,
+            )
+        )
+        self.assertTrue(audit.passed)
+        self.assertIn("logic", audit.score_summary)
+        self.assertIn("character", audit.score_summary)
+        self.assertIn("hook", audit.score_summary)
+        self.assertIn("pace", audit.score_summary)
+        self.assertGreater(audit.score_summary["hook"], 9.0)
+
 
 if __name__ == "__main__":
     unittest.main()

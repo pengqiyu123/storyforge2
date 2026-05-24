@@ -1,0 +1,29 @@
+{
+  "book_id": "plan6-seq-run",
+  "chapters": [
+    {
+      "chapter_no": 10,
+      "book_id": "plan6-seq-run",
+      "final_stage": "exported",
+      "final_outcome": "exported",
+      "approved": true,
+      "exported": true,
+      "revision_rounds_executed": 1,
+      "comparison_history": [],
+      "last_gate_reasons": [
+        "gate:passed"
+      ],
+      "last_truth_delta_notes": [
+        "不要把车内求救者、七号位置背后受伤者、谢衡三者直接视为同一人。",
+        "‘谢衡在下面’目前只能作为七号位置背后受伤者的明确说法，未被其他证据完全证实。",
+        "本章强化了‘声音被导向/校声/回讯’机制，后续不能忽略车内传声结构与七号位置回讯结构的并行存在。"
+      ],
+      "style_drift_axes": [],
+      "audit_diagnostics_history": [],
+      "truth_diagnostics_history": [],
+      "error": null,
+      "approval_receipt_artifact_id": "0010-approval_receipt-1de57418",
+      "export_manifest_artifact_id": "0010-export_manifest-3dfa1c50"
+    }
+  ]
+}

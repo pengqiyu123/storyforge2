@@ -147,6 +147,29 @@ class StoryEngineServiceGuardTests(unittest.TestCase):
         with self.assertRaises(ValueError):
             self.service.revise_chapter("test-book", 1)
 
+    def test_revise_accepts_rolled_back_stage(self) -> None:
+        self.service.plan_chapter("test-book", 1, guidance="keep the hook sharp")
+        self.service.compose_chapter("test-book", 1)
+        draft_id = self.service.write_chapter_draft("test-book", 1, mode="initial")
+        settled = self.service.settle_chapter("test-book", 1, draft_id)
+        first_gate = self.service.audit_chapter("test-book", 1, settled.current_artifact_refs["settlement"])
+        revision = self.service.revise_chapter("test-book", 1, mode="rework")
+        revised_draft = revision["draft_artifact_id"]
+        revised_settled = self.service.settle_chapter("test-book", 1, revised_draft)
+        revised_gate = self.service.audit_chapter("test-book", 1, revised_settled.current_artifact_refs["settlement"])
+        comparison = self.service.compare_candidate(
+            "test-book",
+            1,
+            first_gate["gate_decision_artifact_id"],
+            revised_gate["gate_decision_artifact_id"],
+        )
+        self.assertEqual(comparison["status"].stage.value, "rolled_back")
+
+        retry = self.service.revise_chapter("test-book", 1, mode="rework")
+
+        self.assertEqual(retry["status"].stage.value, "revising")
+        self.assertTrue(retry["draft_artifact_id"])
+
     def test_compare_candidate_rolls_back_on_regression(self) -> None:
         self.service.plan_chapter("test-book", 1, guidance="keep the hook sharp")
         self.service.compose_chapter("test-book", 1)
@@ -444,7 +467,7 @@ class StoryEngineServiceGuardTests(unittest.TestCase):
         approved = self.service.approve_chapter("test-book", 1)
         self.assertEqual(approved.stage.value, "approved")
 
-    def test_truth_reconcile_blocks_character_location_conflict(self) -> None:
+    def test_truth_reconcile_warns_on_character_location_change(self) -> None:
         self._install_truth_extractor(
             [
                 self._truth_payload(
@@ -463,8 +486,14 @@ class StoryEngineServiceGuardTests(unittest.TestCase):
         self._approve_single_pass_chapter(1)
         settled = self._prepare_settled_chapter(2)
 
-        with self.assertRaisesRegex(ValueError, "truth reconcile produced blocking conflicts"):
-            self.service.audit_chapter("test-book", 2, settled.current_artifact_refs["settlement"])
+        audit = self.service.audit_chapter("test-book", 2, settled.current_artifact_refs["settlement"])
+        location_warnings = [
+            c for c in audit["truth_delta"]["conflicts"]
+            if c["category"] == "character_location_conflict"
+        ]
+        self.assertTrue(location_warnings)
+        self.assertEqual(location_warnings[0]["severity"], "warning")
+        self.assertTrue(audit["gate_decision"]["passed"])
 
     def test_truth_reconcile_blocks_knowledge_boundary_conflict(self) -> None:
         self._install_truth_extractor(

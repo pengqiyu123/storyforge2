@@ -94,6 +94,9 @@ def build_parser() -> argparse.ArgumentParser:
     chapter_full_cycle.add_argument("--platform", default="tomato")
     chapter_full_cycle.add_argument("--max-auto-rounds", type=int, default=None)
 
+    studio = subparsers.add_parser("studio")
+    studio.add_argument("book_id", nargs="?", default=None)
+
     return parser
 
 
@@ -187,6 +190,10 @@ def main() -> int:
             platform=args.platform,
             max_auto_rounds=args.max_auto_rounds,
         )
+    elif args.command == "studio":
+        from engine.cli.studio import run_studio
+        run_studio(Path(args.root))
+        return 0
     else:
         raise ValueError(f"unknown command: {args.command}")
 

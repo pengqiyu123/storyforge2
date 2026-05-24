@@ -1,0 +1,21 @@
+{
+  "chapter_no": 9,
+  "book_id": "plan6-seq-run",
+  "final_stage": "exported",
+  "final_outcome": "exported",
+  "approved": true,
+  "exported": true,
+  "revision_rounds_executed": 5,
+  "comparison_history": [],
+  "last_gate_reasons": [],
+  "last_truth_delta_notes": [],
+  "style_drift_axes": [
+    "sentence_length_uniformity",
+    "discourse_particle_presence"
+  ],
+  "audit_diagnostics_history": [],
+  "truth_diagnostics_history": [],
+  "error": null,
+  "approval_receipt_artifact_id": "0009-approval_receipt-5cf9aa97",
+  "export_manifest_artifact_id": "0009-export_manifest-d800fce2"
+}

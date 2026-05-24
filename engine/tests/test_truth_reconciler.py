@@ -99,6 +99,7 @@ class TruthReconcilerTests(unittest.TestCase):
             truth_snapshot=_snapshot(),
         )
         self.assertEqual([item.category for item in conflicts], ["character_location_conflict"])
+        self.assertEqual(conflicts[0].severity, "warning")
 
     def test_detects_knowledge_boundary_conflict(self) -> None:
         conflicts = detect_truth_conflicts(

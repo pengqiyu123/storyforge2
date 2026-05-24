@@ -1,0 +1,63 @@
+{
+  "chapter_no": 6,
+  "book_id": "plan6-seq-run",
+  "final_stage": "exported",
+  "final_outcome": "exported",
+  "approved": true,
+  "exported": true,
+  "revision_rounds_executed": 1,
+  "comparison_history": [
+    {
+      "comparison_artifact_id": "0006-comparison-46d09181",
+      "style_signal_artifact_id": null,
+      "decision": "keep",
+      "reason_codes": [
+        "became_passed"
+      ],
+      "delta_overall": 8.8,
+      "critical_delta": -1
+    }
+  ],
+  "last_gate_reasons": [
+    "gate:passed"
+  ],
+  "last_truth_delta_notes": [
+    "仅保留后续章节必须服从的事实；林砚关于‘车里的人比暗道更重要’等属于判断，不作为硬性真相。"
+  ],
+  "style_drift_axes": [],
+  "audit_diagnostics_history": [
+    {
+      "mode_used": "text_fallback",
+      "primary_error": "HTTP Error 502: Bad Gateway",
+      "fallback_error": null,
+      "raw_excerpt": "{\"passed\":true,\"critical_count\":0,\"issues\":[],\"recommended_mode\":\"pass\",\"score_summary\":{\"overall\":94,\"plot_coherence\":93,\"suspense\":96,\"style_fit\":95,\"character_tension\":92,\"ending_hook\":97}}",
+      "request_bytes": 9305
+    },
+    {
+      "mode_used": "text_fallback",
+      "primary_error": "HTTP Error 502: Bad Gateway",
+      "fallback_error": null,
+      "raw_excerpt": "{\"passed\":true,\"critical_count\":0,\"issues\":[{\"severity\":\"minor\",\"category\":\"logic\",\"location\":\"中段“车尾正下方有一小片更深的湿痕…更像里面有活物在呼吸”\",\"description\":\"以地面湿痕直接推断车内有活物呼吸，观察到结论的跳跃略大，专业性说服力稍弱。\",\"suggestion\":\"可补一处更具体的佐证，如湿痕伴随有规律新增、缝隙有温热气流、或结合闷敲形成复合判断。\"},{\"severity\":\"minor\",\"category\":\"character\",\"location\":\"“你凭什么确",
+      "request_bytes": 11069
+    }
+  ],
+  "truth_diagnostics_history": [
+    {
+      "mode_used": "text_fallback",
+      "primary_error": "HTTP Error 502: Bad Gateway",
+      "fallback_error": null,
+      "raw_excerpt": "{\"fact_assertions\":[{\"category\":\"chapter_outcome\",\"statement\":\"在便利店后巷，众人再次听见灰白色面包车车厢内传出至少两次闷响，其中第二次更实。\",\"hard\":false,\"assertion_basis\":\"explicit\"},{\"category\":\"chapter_outcome\",\"statement\":\"年轻女店员当场确认自己也听见了声音，并判断声音来自面包车内。\",\"hard\":false,\"assertion_basis\":\"explicit\"},{\"category\":\"chapter_outcome\",\"stat",
+      "request_bytes": 37112
+    },
+    {
+      "mode_used": "text_fallback",
+      "primary_error": "HTTP Error 502: Bad Gateway",
+      "fallback_error": null,
+      "raw_excerpt": "{\"fact_assertions\":[{\"category\":\"chapter_outcome\",\"statement\":\"年轻警员在灰白色面包车后门处再次确认后门仍锁着。\",\"hard\":false,\"assertion_basis\":\"explicit\"},{\"category\":\"chapter_outcome\",\"statement\":\"林砚主张先处理面包车而非先下暗道，理由是暗道跑不了而车里的人可能会死。\",\"hard\":false,\"assertion_basis\":\"explicit\"},{\"category\":\"chapter_outcome\",\"statement\":\"林砚",
+      "request_bytes": 38355
+    }
+  ],
+  "error": null,
+  "approval_receipt_artifact_id": "0006-approval_receipt-b6112bdf",
+  "export_manifest_artifact_id": "0006-export_manifest-9f777a9f"
+}

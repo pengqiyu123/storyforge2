@@ -39,10 +39,54 @@ PASS_OVERALL_THRESHOLD = 6.0
 PASS_DIMENSION_THRESHOLD = 5.5
 MIN_CHINESE_CHAR_COUNT = 800
 
-REPORT_TERMS = ("信息边界", "核心矛盾", "风险评估", "最大化收益", "推进目标", "关键抓手", "阶段结论")
-META_PATTERNS = ("作为作者", "作为读者", "本章将", "下一章会", "让我们看看", "总结一下", "下面开始")
+REPORT_TERMS = (
+    "信息边界",
+    "核心矛盾",
+    "风险评估",
+    "最大化收益",
+    "推进目标",
+    "关键抓手",
+    "阶段结论",
+    "核心动机",
+    "信息落差",
+    "核心风险",
+    "当前处境",
+    "行为约束",
+    "性格过滤",
+    "情绪外化",
+    "锚定效应",
+    "沉没成本",
+    "认知共鸣",
+)
+META_PATTERNS = (
+    "作为作者",
+    "作为读者",
+    "本章将",
+    "下一章会",
+    "让我们看看",
+    "总结一下",
+    "下面开始",
+    "到这里算是",
+    "接下来就是",
+    "后面会",
+    "故事发展到了",
+    "读者可能",
+    "我们可以",
+)
 EXPLANATORY_PATTERNS = ("之所以", "换句话说", "也就是说", "其原因在于", "从某种意义上说")
-TRANSITION_PATTERNS = ("与此同时", "另一方面", "同一时间", "紧接着", "随后", "下一刻")
+TRANSITION_PATTERNS = (
+    "与此同时",
+    "另一方面",
+    "同一时间",
+    "紧接着",
+    "随后",
+    "下一刻",
+    "然而",
+    "不过",
+    "尽管如此",
+    "话虽如此",
+    "但值得注意的是",
+)
 FORBIDDEN_PATTERNS: tuple[tuple[str, str], ...] = (
     ("forbidden_token_scan", r"forbidden"),
     ("report_output_leak", r"审计报告|实施计划|输出要求"),
@@ -277,7 +321,7 @@ class GateRunner:
                     category=RuleCategory.STYLE,
                     policy=GatePolicy.WARN,
                     description="解释腔过密",
-                    threshold=3,
+                    threshold=2,
                 ),
                 self._check_explanatory_patterns,
             ),
@@ -299,7 +343,7 @@ class GateRunner:
                     category=RuleCategory.STRUCTURE,
                     policy=GatePolicy.WARN,
                     description="段落长度过于均匀",
-                    threshold=0.12,
+                    threshold=0.15,
                 ),
                 self._check_paragraph_uniformity,
             ),
@@ -310,7 +354,7 @@ class GateRunner:
                     category=RuleCategory.STYLE,
                     policy=GatePolicy.WARN,
                     description="模糊词密度过高",
-                    threshold=45.0,
+                    threshold=3.0,
                 ),
                 self._check_hedge_words,
             ),

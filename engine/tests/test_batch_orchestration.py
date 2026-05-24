@@ -131,7 +131,7 @@ class BatchOrchestrationTests(unittest.TestCase):
         self.assertEqual(second_audit.status.value, "queued")
         self.assertEqual(self.engine.get_chapter_status(self.book_id, 1)["status"].stage.value, "audited_failed")
 
-    def test_invalidated_chapter_blocks_batch_resume_until_reset(self) -> None:
+    def test_invalidated_chapter_is_auto_reset_to_planned_in_audit_batch(self) -> None:
         self.engine.plan_chapter(self.book_id, 2, guidance="stale chapter setup")
         self.engine.compose_chapter(self.book_id, 2)
         draft_id = self.engine.write_chapter_draft(self.book_id, 2, mode="initial")
@@ -151,13 +151,45 @@ class BatchOrchestrationTests(unittest.TestCase):
         )
         paused = self.batch.start_batch_run(audit_run.batch_run_id)
         self.assertEqual(paused.status.value, "paused")
-        self.assertIn("stale_truth_head", paused.pause_reason_codes)
+        self.assertIn("chapter_failed", paused.pause_reason_codes)
+        self.assertEqual(self.engine.get_chapter_status(self.book_id, 2)["status"].stage.value, "planned")
 
-        self.engine.reset_invalidated_chapter(self.book_id, 2)
-        self.engine.reset_invalidated_chapter(self.book_id, 3)
-        resumed = self.batch.resume_batch_run(audit_run.batch_run_id)
-        self.assertEqual(resumed.status.value, "paused")
-        self.assertIn("chapter_not_ready", resumed.pause_reason_codes)
+    def test_invalidated_chapter_does_not_break_prepare_batch_reentry(self) -> None:
+        prepare = self.batch.create_batch_run(
+            self.book_id,
+            chapter_range=[1, 2],
+            batch_mode="prepare_batch",
+        )
+        self.batch.start_batch_run(prepare.batch_run_id)
+        self._approved_chapter(3)
+        receipt_id = self.engine.get_chapter_status(self.book_id, 3)["status"].current_artifact_refs["truth_commit_receipt"]
+        self.engine.invalidate_downstream(self.book_id, receipt_id)
+
+        rerun = self.batch.start_batch_run(prepare.batch_run_id)
+
+        self.assertEqual(rerun.status.value, "completed")
+        status = self.engine.get_chapter_status(self.book_id, 2)["status"]
+        self.assertEqual(status.stage.value, "settled")
+
+    def test_auto_reset_resolves_open_propagation_debt(self) -> None:
+        self.engine.plan_chapter(self.book_id, 2, guidance="stale chapter setup")
+        self.engine.compose_chapter(self.book_id, 2)
+        draft_id = self.engine.write_chapter_draft(self.book_id, 2, mode="initial")
+        self.engine.settle_chapter(self.book_id, 2, draft_id)
+        self._approved_chapter(1)
+        receipt_id = self.engine.get_chapter_status(self.book_id, 1)["status"].current_artifact_refs["truth_commit_receipt"]
+        self.engine.invalidate_downstream(self.book_id, receipt_id)
+
+        audit_run = self.batch.create_batch_run(
+            self.book_id,
+            chapter_range=[2],
+            batch_mode="audit_batch",
+        )
+        self.batch.start_batch_run(audit_run.batch_run_id)
+
+        freshness = self.engine.get_chapter_truth_freshness(self.book_id, 2)
+        self.assertEqual(self.engine.get_chapter_status(self.book_id, 2)["status"].stage.value, "planned")
+        self.assertTrue(freshness["is_fresh"])
 
     def test_checkpoint_review_creates_reader_panel_and_can_pause_batch(self) -> None:
         batch = BatchOrchestratorService(

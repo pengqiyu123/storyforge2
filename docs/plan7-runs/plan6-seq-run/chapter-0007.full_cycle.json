@@ -1,0 +1,39 @@
+{
+  "chapter_no": 7,
+  "book_id": "plan6-seq-run",
+  "final_stage": "exported",
+  "final_outcome": "exported",
+  "approved": true,
+  "exported": true,
+  "revision_rounds_executed": 0,
+  "comparison_history": [],
+  "last_gate_reasons": [
+    "gate:passed"
+  ],
+  "last_truth_delta_notes": [
+    "只保留后续章节必须服从的事实。",
+    "‘七号不是门’目前既有短信明示，也有林砚的现场判断支撑，应作为后续不可违背的重要限定。"
+  ],
+  "style_drift_axes": [],
+  "audit_diagnostics_history": [
+    {
+      "mode_used": "text_fallback",
+      "primary_error": "HTTP Error 502: Bad Gateway",
+      "fallback_error": null,
+      "raw_excerpt": "{\"passed\":true,\"critical_count\":0,\"issues\":[],\"recommended_mode\":\"pass\",\"score_summary\":{\"overall\":94,\"plot_coherence\":93,\"tension\":96,\"style_fit\":95,\"hook\":97,\"constraint_fit\":95}}",
+      "request_bytes": 8810
+    }
+  ],
+  "truth_diagnostics_history": [
+    {
+      "mode_used": "text_fallback",
+      "primary_error": "HTTP Error 502: Bad Gateway",
+      "fallback_error": null,
+      "raw_excerpt": "{\"fact_assertions\":[{\"category\":\"chapter_outcome\",\"statement\":\"林砚依据旧黄铜七号钥匙柄背面的两短一长划痕、车内先回两下后又敲三下、以及店内金属摩擦声在三下后停止，明确判断车内与店内七号位置后方存在按节拍互相试探或传信的联动。\",\"hard\":false,\"assertion_basis\":\"explicit\"},{\"category\":\"chapter_outcome\",\"statement\":\"年轻女店员确认今早自己听见的也是先两下、过一会儿就没动静，且节奏很匀，不像乱敲。\",\"hard\":false,\"assertion_ba",
+      "request_bytes": 43076
+    }
+  ],
+  "error": null,
+  "approval_receipt_artifact_id": "0007-approval_receipt-78c2b16d",
+  "export_manifest_artifact_id": "0007-export_manifest-c9657a93"
+}

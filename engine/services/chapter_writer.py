@@ -21,16 +21,17 @@ def _summarize_truth_slice(truth_context_slice: dict) -> str:
     canon_facts = truth_context_slice.get("canon", {}).get("facts", [])
     characters = truth_context_slice.get("characters", {}).get("characters", [])
     hooks = truth_context_slice.get("hook_ledger", {}).get("hooks", [])
-    canon_lines = [str(item.get("statement", "")).strip() for item in canon_facts[:5] if isinstance(item, dict)]
+    # Take up to 8 facts for revision context (increased from 5)
+    canon_lines = [str(item.get("statement", "")).strip() for item in canon_facts[:8] if isinstance(item, dict)]
     character_lines = []
-    for item in characters[:5]:
+    for item in characters[:6]:
         if not isinstance(item, dict):
             continue
         display_name = str(item.get("display_name", "")).strip()
         location = str(item.get("current_location", "")).strip()
         if display_name:
             character_lines.append(f"{display_name}:{location or '位置未明'}")
-    hook_lines = [str(item.get("label", "")).strip() for item in hooks[:5] if isinstance(item, dict)]
+    hook_lines = [str(item.get("label", "")).strip() for item in hooks[:6] if isinstance(item, dict)]
     sections = []
     if canon_lines:
         sections.append("已提交事实：" + "；".join(line for line in canon_lines if line))
@@ -50,6 +51,19 @@ def _clean_text_response(text: str) -> str:
     cleaned = re.sub(r"^\s*(以下是|下面是|这是|输出如下)[:：]\s*", "", cleaned)
     cleaned = re.sub(r"\n\s*(以上|希望这段|如果需要).*$", "", cleaned, flags=re.S)
     return cleaned.strip()
+
+
+def _expand_style_drift_messages(messages: list[str]) -> list[str]:
+    expanded: list[str] = []
+    mapping = {
+        "style_drift:sentence_length_uniformity": "打散过于整齐的句长分布，避免连续短句或同长度句群",
+        "style_drift:dialogue_density": "补足对话与互动，避免整段都变成旁白推进",
+        "style_drift:metaphor_density": "适度补充贴主题的比喻，不要让画面只剩信息搬运",
+        "style_drift:discourse_particle_presence": "补充自然口语气息，避免人物说话和内声过度书面化",
+    }
+    for message in messages:
+        expanded.append(mapping.get(message, message))
+    return expanded
 
 
 @dataclass(slots=True)
@@ -146,13 +160,21 @@ class RealChapterWriter:
             truth_conflict_messages=truth_conflict_messages,
             revision_mode=revision_mode,
         )
+        # Build a lightweight user_payload for revision to avoid 504 on large truth_context_slice
+        # Only include essential fields, not the full compose_context which can be 60KB+
+        truth_summary = _summarize_truth_slice(truth_context_slice)
+        lightweight_compose = {
+            "constraints": compose_payload.get("constraints", []),
+            "materials": compose_payload.get("materials", []),
+            "truth_summary": truth_summary,
+        }
         return self._generate_and_validate(
             task_name="chapter_write_revision",
             system_prompt=prompt,
             user_payload={
                 "chapter_no": chapter_no,
-                "plan": plan_payload,
-                "compose_context": compose_payload,
+                "plan_guidance": plan_payload.get("guidance") or plan_payload.get("hook_target") or "",
+                "compose_context": lightweight_compose,
                 "revision_brief": revision_brief,
             },
         )
@@ -218,12 +240,14 @@ class RealChapterWriter:
         must_not_touch = "；".join(str(item) for item in revision_brief.get("must_not_touch", []) if str(item).strip())
         risk_points = "；".join(str(item) for item in revision_brief.get("risk_points", []) if str(item).strip())
         failed_rules = "；".join(failed_rule_messages[:8]) or "无"
+        failed_rules = "；".join(_expand_style_drift_messages(failed_rule_messages)[:8]) or "无"
         audit_issues = "；".join(top_audit_issues[:8]) or "无"
         low_dims = "；".join(low_dimensions[:2]) or "无"
         truth_conflicts = "；".join(truth_conflict_messages[:6]) or "无"
         return (
             "你是一位中文悬疑小说修订作者，负责在不破坏章节 premise 和已提交真相的前提下，修复审计失败稿。\n"
-            f"[STYLE: 比喻密度≥1.5/百字；对话占比25%-30%；句长15-25字/句；禁用词：{FORBIDDEN_STYLE_WORDS}]\n"
+            f"[STYLE: 比喻密度≥1.5/百字；对话占比25%-30%；句长变化要有节奏感，避免连续同长度句；禁用词：{FORBIDDEN_STYLE_WORDS}]\n"
+            f"[CRITICAL: 推理必须有硬证据支撑，不能只靠主角口头推断。每个判断都要落在可观察的物理线索上。]\n"
             f"章节：第{chapter_no}章。\n"
             f"修订模式：{revision_mode}。\n"
             f"章节指导：{plan_payload.get('guidance') or plan_payload.get('hook_target') or ''}\n"
@@ -235,5 +259,7 @@ class RealChapterWriter:
             f"最低维度：{low_dims}\n"
             f"真相冲突禁区：{truth_conflicts}\n"
             f"已提交真相摘要：{truth_summary or '当前无已提交真相负担。'}\n"
+            "[SENTENCE VARIATION: 打破句长均匀度。短句用于紧张动作，中句用于推进，长句用于环境铺垫。不要连续出现三个同长度句。]\n"
+            "[EVIDENCE ANCHOR: 凡是主角做出的判断，必须有至少一个可验证的物理线索支撑。不能只说'他知道'或'他推断'，要写出他看到什么、听到什么、闻到什么才得出结论。]\n"
             "直接输出修订后的正文，不要写解释，不要写修订说明，不要写作者意图。"
         )

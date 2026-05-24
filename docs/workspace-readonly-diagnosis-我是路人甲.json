@@ -1,0 +1,1122 @@
+[
+  {
+    "book_dir": "d:\\python\\Novel\\storyforge\\workspace\\books\\我是路人甲",
+    "chapter_path": "d:\\python\\Novel\\storyforge\\workspace\\books\\我是路人甲\\chapters\\0001-剧本不对.md",
+    "chapter_no": 1,
+    "mechanical_gate": {
+      "rule_results": [
+        {
+          "rule_id": "empty_text",
+          "passed": true,
+          "message": "正文非空",
+          "severity": "critical",
+          "category": "integrity",
+          "blocking": true,
+          "observed": 1799,
+          "threshold": null,
+          "evidence": []
+        },
+        {
+          "rule_id": "below_min_word_count",
+          "passed": true,
+          "message": "汉字数达到下限",
+          "severity": "critical",
+          "category": "integrity",
+          "blocking": true,
+          "observed": 1799,
+          "threshold": 800,
+          "evidence": []
+        },
+        {
+          "rule_id": "unbalanced_quote_or_bracket",
+          "passed": true,
+          "message": "引号括号配对正常",
+          "severity": "critical",
+          "category": "structure",
+          "blocking": true,
+          "observed": 0,
+          "threshold": null,
+          "evidence": []
+        },
+        {
+          "rule_id": "forbidden_patterns",
+          "passed": true,
+          "message": "未命中禁用模式",
+          "severity": "critical",
+          "category": "meta",
+          "blocking": true,
+          "observed": 0,
+          "threshold": null,
+          "evidence": []
+        },
+        {
+          "rule_id": "report_term_leak",
+          "passed": true,
+          "message": "未发现报告术语",
+          "severity": "warning",
+          "category": "ai_tell",
+          "blocking": false,
+          "observed": 0,
+          "threshold": null,
+          "evidence": []
+        },
+        {
+          "rule_id": "meta_narration_patterns",
+          "passed": true,
+          "message": "未发现元叙事口吻",
+          "severity": "warning",
+          "category": "meta",
+          "blocking": false,
+          "observed": 0,
+          "threshold": null,
+          "evidence": []
+        },
+        {
+          "rule_id": "explanatory_density",
+          "passed": true,
+          "message": "解释腔控制正常",
+          "severity": "warning",
+          "category": "style",
+          "blocking": false,
+          "observed": 0,
+          "threshold": 2,
+          "evidence": []
+        },
+        {
+          "rule_id": "formulaic_transitions",
+          "passed": true,
+          "message": "转场表达正常",
+          "severity": "warning",
+          "category": "style",
+          "blocking": false,
+          "observed": 0,
+          "threshold": 3,
+          "evidence": []
+        },
+        {
+          "rule_id": "paragraph_uniformity",
+          "passed": true,
+          "message": "段落节奏有变化",
+          "severity": "warning",
+          "category": "structure",
+          "blocking": false,
+          "observed": 1.096,
+          "threshold": 0.15,
+          "evidence": []
+        },
+        {
+          "rule_id": "hedge_word_density",
+          "passed": true,
+          "message": "模糊词密度正常",
+          "severity": "warning",
+          "category": "style",
+          "blocking": false,
+          "observed": 0.5559,
+          "threshold": 3.0,
+          "evidence": []
+        },
+        {
+          "rule_id": "list_like_structure",
+          "passed": true,
+          "message": "句首变化正常",
+          "severity": "warning",
+          "category": "structure",
+          "blocking": false,
+          "observed": 1,
+          "threshold": 3,
+          "evidence": [
+            "第一"
+          ]
+        },
+        {
+          "rule_id": "surprise_marker_density",
+          "passed": true,
+          "message": "惊讶词密度正常",
+          "severity": "warning",
+          "category": "ai_tell",
+          "blocking": false,
+          "observed": 0.0,
+          "threshold": 35.0,
+          "evidence": []
+        }
+      ],
+      "blocked": false,
+      "summary_counts": {
+        "total": 12,
+        "failed": 0
+      },
+      "blocking_rule_ids": [],
+      "warning_rule_ids": [],
+      "issue_counts_by_severity": {
+        "info": 0,
+        "warning": 0,
+        "critical": 0
+      }
+    },
+    "audit": {
+      "passed": false,
+      "critical_count": 1,
+      "issues": [
+        {
+          "severity": "critical",
+          "category": "logic",
+          "description": "初稿仍需至少一轮独立修订",
+          "suggestion": "先收紧逻辑，再强化章尾钩子"
+        }
+      ],
+      "recommended_mode": "rework",
+      "score_summary": {
+        "overall": 5.08,
+        "logic": 5.0,
+        "character": 5.1,
+        "hook": 5.2,
+        "pace": 5.0
+      }
+    },
+    "gate_decision": {
+      "passed": false,
+      "overall_score": 5.08,
+      "critical_count": 1,
+      "blocked_by_mechanical": false,
+      "dimension_scores": {
+        "logic": 5.0,
+        "character": 5.1,
+        "hook": 5.2,
+        "pace": 5.0
+      },
+      "source_refs": {},
+      "reason_codes": [
+        "audit:logic",
+        "score:overall_below_threshold",
+        "score:logic_below_threshold",
+        "score:character_below_threshold",
+        "score:hook_below_threshold",
+        "score:pace_below_threshold"
+      ]
+    },
+    "style_signal": null,
+    "truth_probe": {
+      "fact_assertions": [
+        {
+          "fact_id": "fact-ch0001-1",
+          "category": "chapter_outcome",
+          "statement": "林默在当前章节中推进了主线行动。",
+          "hard": false,
+          "assertion_basis": "explicit"
+        }
+      ],
+      "proposed_fact_updates": [],
+      "character_updates": [],
+      "relationship_updates": [],
+      "hook_updates": [],
+      "chapter_irreversible_facts": [],
+      "notes": [
+        "workspace_read_only_probe"
+      ]
+    }
+  },
+  {
+    "book_dir": "d:\\python\\Novel\\storyforge\\workspace\\books\\我是路人甲",
+    "chapter_path": "d:\\python\\Novel\\storyforge\\workspace\\books\\我是路人甲\\chapters\\0002-三成(润).md",
+    "chapter_no": 2,
+    "mechanical_gate": {
+      "rule_results": [
+        {
+          "rule_id": "empty_text",
+          "passed": true,
+          "message": "正文非空",
+          "severity": "critical",
+          "category": "integrity",
+          "blocking": true,
+          "observed": 1746,
+          "threshold": null,
+          "evidence": []
+        },
+        {
+          "rule_id": "below_min_word_count",
+          "passed": true,
+          "message": "汉字数达到下限",
+          "severity": "critical",
+          "category": "integrity",
+          "blocking": true,
+          "observed": 1746,
+          "threshold": 800,
+          "evidence": []
+        },
+        {
+          "rule_id": "unbalanced_quote_or_bracket",
+          "passed": true,
+          "message": "引号括号配对正常",
+          "severity": "critical",
+          "category": "structure",
+          "blocking": true,
+          "observed": 0,
+          "threshold": null,
+          "evidence": []
+        },
+        {
+          "rule_id": "forbidden_patterns",
+          "passed": true,
+          "message": "未命中禁用模式",
+          "severity": "critical",
+          "category": "meta",
+          "blocking": true,
+          "observed": 0,
+          "threshold": null,
+          "evidence": []
+        },
+        {
+          "rule_id": "report_term_leak",
+          "passed": true,
+          "message": "未发现报告术语",
+          "severity": "warning",
+          "category": "ai_tell",
+          "blocking": false,
+          "observed": 0,
+          "threshold": null,
+          "evidence": []
+        },
+        {
+          "rule_id": "meta_narration_patterns",
+          "passed": true,
+          "message": "未发现元叙事口吻",
+          "severity": "warning",
+          "category": "meta",
+          "blocking": false,
+          "observed": 0,
+          "threshold": null,
+          "evidence": []
+        },
+        {
+          "rule_id": "explanatory_density",
+          "passed": true,
+          "message": "解释腔控制正常",
+          "severity": "warning",
+          "category": "style",
+          "blocking": false,
+          "observed": 0,
+          "threshold": 2,
+          "evidence": []
+        },
+        {
+          "rule_id": "formulaic_transitions",
+          "passed": true,
+          "message": "转场表达正常",
+          "severity": "warning",
+          "category": "style",
+          "blocking": false,
+          "observed": 0,
+          "threshold": 3,
+          "evidence": []
+        },
+        {
+          "rule_id": "paragraph_uniformity",
+          "passed": true,
+          "message": "段落节奏有变化",
+          "severity": "warning",
+          "category": "structure",
+          "blocking": false,
+          "observed": 0.9231,
+          "threshold": 0.15,
+          "evidence": []
+        },
+        {
+          "rule_id": "hedge_word_density",
+          "passed": true,
+          "message": "模糊词密度正常",
+          "severity": "warning",
+          "category": "style",
+          "blocking": false,
+          "observed": 2.8637,
+          "threshold": 3.0,
+          "evidence": []
+        },
+        {
+          "rule_id": "list_like_structure",
+          "passed": true,
+          "message": "句首变化正常",
+          "severity": "warning",
+          "category": "structure",
+          "blocking": false,
+          "observed": 2,
+          "threshold": 3,
+          "evidence": [
+            "石头"
+          ]
+        },
+        {
+          "rule_id": "surprise_marker_density",
+          "passed": true,
+          "message": "惊讶词密度正常",
+          "severity": "warning",
+          "category": "ai_tell",
+          "blocking": false,
+          "observed": 0.5727,
+          "threshold": 35.0,
+          "evidence": []
+        }
+      ],
+      "blocked": false,
+      "summary_counts": {
+        "total": 12,
+        "failed": 0
+      },
+      "blocking_rule_ids": [],
+      "warning_rule_ids": [],
+      "issue_counts_by_severity": {
+        "info": 0,
+        "warning": 0,
+        "critical": 0
+      }
+    },
+    "audit": {
+      "passed": false,
+      "critical_count": 1,
+      "issues": [
+        {
+          "severity": "critical",
+          "category": "logic",
+          "description": "初稿仍需至少一轮独立修订",
+          "suggestion": "先收紧逻辑，再强化章尾钩子"
+        }
+      ],
+      "recommended_mode": "rework",
+      "score_summary": {
+        "overall": 5.08,
+        "logic": 5.0,
+        "character": 5.1,
+        "hook": 5.2,
+        "pace": 5.0
+      }
+    },
+    "gate_decision": {
+      "passed": false,
+      "overall_score": 5.08,
+      "critical_count": 1,
+      "blocked_by_mechanical": false,
+      "dimension_scores": {
+        "logic": 5.0,
+        "character": 5.1,
+        "hook": 5.2,
+        "pace": 5.0
+      },
+      "source_refs": {},
+      "reason_codes": [
+        "audit:logic",
+        "score:overall_below_threshold",
+        "score:logic_below_threshold",
+        "score:character_below_threshold",
+        "score:hook_below_threshold",
+        "score:pace_below_threshold"
+      ]
+    },
+    "style_signal": {
+      "chapter_no": 2,
+      "reference_profile_ref": "workspace-baseline",
+      "drift_score": 7.7608,
+      "dominant_drift_axes": [
+        "metaphor_density",
+        "discourse_particle_presence"
+      ],
+      "recommended_action": "review"
+    },
+    "truth_probe": {
+      "fact_assertions": [
+        {
+          "fact_id": "fact-ch0002-1",
+          "category": "chapter_outcome",
+          "statement": "林默在当前章节中推进了主线行动。",
+          "hard": false,
+          "assertion_basis": "explicit"
+        }
+      ],
+      "proposed_fact_updates": [],
+      "character_updates": [],
+      "relationship_updates": [],
+      "hook_updates": [],
+      "chapter_irreversible_facts": [],
+      "notes": [
+        "workspace_read_only_probe"
+      ]
+    }
+  },
+  {
+    "book_dir": "d:\\python\\Novel\\storyforge\\workspace\\books\\我是路人甲",
+    "chapter_path": "d:\\python\\Novel\\storyforge\\workspace\\books\\我是路人甲\\chapters\\0003-不亮.md",
+    "chapter_no": 3,
+    "mechanical_gate": {
+      "rule_results": [
+        {
+          "rule_id": "empty_text",
+          "passed": true,
+          "message": "正文非空",
+          "severity": "critical",
+          "category": "integrity",
+          "blocking": true,
+          "observed": 1666,
+          "threshold": null,
+          "evidence": []
+        },
+        {
+          "rule_id": "below_min_word_count",
+          "passed": true,
+          "message": "汉字数达到下限",
+          "severity": "critical",
+          "category": "integrity",
+          "blocking": true,
+          "observed": 1666,
+          "threshold": 800,
+          "evidence": []
+        },
+        {
+          "rule_id": "unbalanced_quote_or_bracket",
+          "passed": true,
+          "message": "引号括号配对正常",
+          "severity": "critical",
+          "category": "structure",
+          "blocking": true,
+          "observed": 0,
+          "threshold": null,
+          "evidence": []
+        },
+        {
+          "rule_id": "forbidden_patterns",
+          "passed": true,
+          "message": "未命中禁用模式",
+          "severity": "critical",
+          "category": "meta",
+          "blocking": true,
+          "observed": 0,
+          "threshold": null,
+          "evidence": []
+        },
+        {
+          "rule_id": "report_term_leak",
+          "passed": true,
+          "message": "未发现报告术语",
+          "severity": "warning",
+          "category": "ai_tell",
+          "blocking": false,
+          "observed": 0,
+          "threshold": null,
+          "evidence": []
+        },
+        {
+          "rule_id": "meta_narration_patterns",
+          "passed": true,
+          "message": "未发现元叙事口吻",
+          "severity": "warning",
+          "category": "meta",
+          "blocking": false,
+          "observed": 0,
+          "threshold": null,
+          "evidence": []
+        },
+        {
+          "rule_id": "explanatory_density",
+          "passed": true,
+          "message": "解释腔控制正常",
+          "severity": "warning",
+          "category": "style",
+          "blocking": false,
+          "observed": 0,
+          "threshold": 2,
+          "evidence": []
+        },
+        {
+          "rule_id": "formulaic_transitions",
+          "passed": true,
+          "message": "转场表达正常",
+          "severity": "warning",
+          "category": "style",
+          "blocking": false,
+          "observed": 0,
+          "threshold": 3,
+          "evidence": []
+        },
+        {
+          "rule_id": "paragraph_uniformity",
+          "passed": true,
+          "message": "段落节奏有变化",
+          "severity": "warning",
+          "category": "structure",
+          "blocking": false,
+          "observed": 0.9442,
+          "threshold": 0.15,
+          "evidence": []
+        },
+        {
+          "rule_id": "hedge_word_density",
+          "passed": true,
+          "message": "模糊词密度正常",
+          "severity": "warning",
+          "category": "style",
+          "blocking": false,
+          "observed": 0.6002,
+          "threshold": 3.0,
+          "evidence": []
+        },
+        {
+          "rule_id": "list_like_structure",
+          "passed": true,
+          "message": "句首变化正常",
+          "severity": "warning",
+          "category": "structure",
+          "blocking": false,
+          "observed": 1,
+          "threshold": 3,
+          "evidence": [
+            "第三"
+          ]
+        },
+        {
+          "rule_id": "surprise_marker_density",
+          "passed": true,
+          "message": "惊讶词密度正常",
+          "severity": "warning",
+          "category": "ai_tell",
+          "blocking": false,
+          "observed": 0.6002,
+          "threshold": 35.0,
+          "evidence": []
+        }
+      ],
+      "blocked": false,
+      "summary_counts": {
+        "total": 12,
+        "failed": 0
+      },
+      "blocking_rule_ids": [],
+      "warning_rule_ids": [],
+      "issue_counts_by_severity": {
+        "info": 0,
+        "warning": 0,
+        "critical": 0
+      }
+    },
+    "audit": {
+      "passed": false,
+      "critical_count": 1,
+      "issues": [
+        {
+          "severity": "critical",
+          "category": "logic",
+          "description": "初稿仍需至少一轮独立修订",
+          "suggestion": "先收紧逻辑，再强化章尾钩子"
+        }
+      ],
+      "recommended_mode": "rework",
+      "score_summary": {
+        "overall": 5.08,
+        "logic": 5.0,
+        "character": 5.1,
+        "hook": 5.2,
+        "pace": 5.0
+      }
+    },
+    "gate_decision": {
+      "passed": false,
+      "overall_score": 5.08,
+      "critical_count": 1,
+      "blocked_by_mechanical": false,
+      "dimension_scores": {
+        "logic": 5.0,
+        "character": 5.1,
+        "hook": 5.2,
+        "pace": 5.0
+      },
+      "source_refs": {},
+      "reason_codes": [
+        "audit:logic",
+        "score:overall_below_threshold",
+        "score:logic_below_threshold",
+        "score:character_below_threshold",
+        "score:hook_below_threshold",
+        "score:pace_below_threshold"
+      ]
+    },
+    "style_signal": {
+      "chapter_no": 3,
+      "reference_profile_ref": "workspace-baseline",
+      "drift_score": 0.3551,
+      "dominant_drift_axes": [
+        "avg_paragraph_chars",
+        "dialogue_density",
+        "metaphor_density",
+        "discourse_particle_presence"
+      ],
+      "recommended_action": "review"
+    },
+    "truth_probe": {
+      "fact_assertions": [
+        {
+          "fact_id": "fact-ch0003-1",
+          "category": "chapter_outcome",
+          "statement": "林默在当前章节中推进了主线行动。",
+          "hard": false,
+          "assertion_basis": "explicit"
+        }
+      ],
+      "proposed_fact_updates": [],
+      "character_updates": [],
+      "relationship_updates": [],
+      "hook_updates": [],
+      "chapter_irreversible_facts": [],
+      "notes": [
+        "workspace_read_only_probe"
+      ]
+    }
+  },
+  {
+    "book_dir": "d:\\python\\Novel\\storyforge\\workspace\\books\\我是路人甲",
+    "chapter_path": "d:\\python\\Novel\\storyforge\\workspace\\books\\我是路人甲\\chapters\\0004-先别看我.md",
+    "chapter_no": 4,
+    "mechanical_gate": {
+      "rule_results": [
+        {
+          "rule_id": "empty_text",
+          "passed": true,
+          "message": "正文非空",
+          "severity": "critical",
+          "category": "integrity",
+          "blocking": true,
+          "observed": 2695,
+          "threshold": null,
+          "evidence": []
+        },
+        {
+          "rule_id": "below_min_word_count",
+          "passed": true,
+          "message": "汉字数达到下限",
+          "severity": "critical",
+          "category": "integrity",
+          "blocking": true,
+          "observed": 2695,
+          "threshold": 800,
+          "evidence": []
+        },
+        {
+          "rule_id": "unbalanced_quote_or_bracket",
+          "passed": true,
+          "message": "引号括号配对正常",
+          "severity": "critical",
+          "category": "structure",
+          "blocking": true,
+          "observed": 0,
+          "threshold": null,
+          "evidence": []
+        },
+        {
+          "rule_id": "forbidden_patterns",
+          "passed": true,
+          "message": "未命中禁用模式",
+          "severity": "critical",
+          "category": "meta",
+          "blocking": true,
+          "observed": 0,
+          "threshold": null,
+          "evidence": []
+        },
+        {
+          "rule_id": "report_term_leak",
+          "passed": true,
+          "message": "未发现报告术语",
+          "severity": "warning",
+          "category": "ai_tell",
+          "blocking": false,
+          "observed": 0,
+          "threshold": null,
+          "evidence": []
+        },
+        {
+          "rule_id": "meta_narration_patterns",
+          "passed": true,
+          "message": "未发现元叙事口吻",
+          "severity": "warning",
+          "category": "meta",
+          "blocking": false,
+          "observed": 0,
+          "threshold": null,
+          "evidence": []
+        },
+        {
+          "rule_id": "explanatory_density",
+          "passed": true,
+          "message": "解释腔控制正常",
+          "severity": "warning",
+          "category": "style",
+          "blocking": false,
+          "observed": 0,
+          "threshold": 2,
+          "evidence": []
+        },
+        {
+          "rule_id": "formulaic_transitions",
+          "passed": true,
+          "message": "转场表达正常",
+          "severity": "warning",
+          "category": "style",
+          "blocking": false,
+          "observed": 0,
+          "threshold": 3,
+          "evidence": []
+        },
+        {
+          "rule_id": "paragraph_uniformity",
+          "passed": true,
+          "message": "段落节奏有变化",
+          "severity": "warning",
+          "category": "structure",
+          "blocking": false,
+          "observed": 0.7961,
+          "threshold": 0.15,
+          "evidence": []
+        },
+        {
+          "rule_id": "hedge_word_density",
+          "passed": true,
+          "message": "模糊词密度正常",
+          "severity": "warning",
+          "category": "style",
+          "blocking": false,
+          "observed": 0.7421,
+          "threshold": 3.0,
+          "evidence": []
+        },
+        {
+          "rule_id": "list_like_structure",
+          "passed": true,
+          "message": "句首变化正常",
+          "severity": "warning",
+          "category": "structure",
+          "blocking": false,
+          "observed": 2,
+          "threshold": 3,
+          "evidence": [
+            "林默"
+          ]
+        },
+        {
+          "rule_id": "surprise_marker_density",
+          "passed": true,
+          "message": "惊讶词密度正常",
+          "severity": "warning",
+          "category": "ai_tell",
+          "blocking": false,
+          "observed": 0.7421,
+          "threshold": 35.0,
+          "evidence": []
+        }
+      ],
+      "blocked": false,
+      "summary_counts": {
+        "total": 12,
+        "failed": 0
+      },
+      "blocking_rule_ids": [],
+      "warning_rule_ids": [],
+      "issue_counts_by_severity": {
+        "info": 0,
+        "warning": 0,
+        "critical": 0
+      }
+    },
+    "audit": {
+      "passed": false,
+      "critical_count": 1,
+      "issues": [
+        {
+          "severity": "critical",
+          "category": "logic",
+          "description": "初稿仍需至少一轮独立修订",
+          "suggestion": "先收紧逻辑，再强化章尾钩子"
+        }
+      ],
+      "recommended_mode": "rework",
+      "score_summary": {
+        "overall": 5.08,
+        "logic": 5.0,
+        "character": 5.1,
+        "hook": 5.2,
+        "pace": 5.0
+      }
+    },
+    "gate_decision": {
+      "passed": false,
+      "overall_score": 5.08,
+      "critical_count": 1,
+      "blocked_by_mechanical": false,
+      "dimension_scores": {
+        "logic": 5.0,
+        "character": 5.1,
+        "hook": 5.2,
+        "pace": 5.0
+      },
+      "source_refs": {},
+      "reason_codes": [
+        "audit:logic",
+        "score:overall_below_threshold",
+        "score:logic_below_threshold",
+        "score:character_below_threshold",
+        "score:hook_below_threshold",
+        "score:pace_below_threshold"
+      ]
+    },
+    "style_signal": {
+      "chapter_no": 4,
+      "reference_profile_ref": "workspace-baseline",
+      "drift_score": 0.1716,
+      "dominant_drift_axes": [
+        "avg_paragraph_chars",
+        "metaphor_density",
+        "discourse_particle_presence"
+      ],
+      "recommended_action": "review"
+    },
+    "truth_probe": {
+      "fact_assertions": [
+        {
+          "fact_id": "fact-ch0004-1",
+          "category": "chapter_outcome",
+          "statement": "林默在当前章节中推进了主线行动。",
+          "hard": false,
+          "assertion_basis": "explicit"
+        }
+      ],
+      "proposed_fact_updates": [],
+      "character_updates": [],
+      "relationship_updates": [],
+      "hook_updates": [],
+      "chapter_irreversible_facts": [],
+      "notes": [
+        "workspace_read_only_probe"
+      ]
+    }
+  },
+  {
+    "book_dir": "d:\\python\\Novel\\storyforge\\workspace\\books\\我是路人甲",
+    "chapter_path": "d:\\python\\Novel\\storyforge\\workspace\\books\\我是路人甲\\chapters\\0005-自己送上门.md",
+    "chapter_no": 5,
+    "mechanical_gate": {
+      "rule_results": [
+        {
+          "rule_id": "empty_text",
+          "passed": true,
+          "message": "正文非空",
+          "severity": "critical",
+          "category": "integrity",
+          "blocking": true,
+          "observed": 1383,
+          "threshold": null,
+          "evidence": []
+        },
+        {
+          "rule_id": "below_min_word_count",
+          "passed": true,
+          "message": "汉字数达到下限",
+          "severity": "critical",
+          "category": "integrity",
+          "blocking": true,
+          "observed": 1383,
+          "threshold": 800,
+          "evidence": []
+        },
+        {
+          "rule_id": "unbalanced_quote_or_bracket",
+          "passed": true,
+          "message": "引号括号配对正常",
+          "severity": "critical",
+          "category": "structure",
+          "blocking": true,
+          "observed": 0,
+          "threshold": null,
+          "evidence": []
+        },
+        {
+          "rule_id": "forbidden_patterns",
+          "passed": true,
+          "message": "未命中禁用模式",
+          "severity": "critical",
+          "category": "meta",
+          "blocking": true,
+          "observed": 0,
+          "threshold": null,
+          "evidence": []
+        },
+        {
+          "rule_id": "report_term_leak",
+          "passed": true,
+          "message": "未发现报告术语",
+          "severity": "warning",
+          "category": "ai_tell",
+          "blocking": false,
+          "observed": 0,
+          "threshold": null,
+          "evidence": []
+        },
+        {
+          "rule_id": "meta_narration_patterns",
+          "passed": true,
+          "message": "未发现元叙事口吻",
+          "severity": "warning",
+          "category": "meta",
+          "blocking": false,
+          "observed": 0,
+          "threshold": null,
+          "evidence": []
+        },
+        {
+          "rule_id": "explanatory_density",
+          "passed": true,
+          "message": "解释腔控制正常",
+          "severity": "warning",
+          "category": "style",
+          "blocking": false,
+          "observed": 0,
+          "threshold": 2,
+          "evidence": []
+        },
+        {
+          "rule_id": "formulaic_transitions",
+          "passed": true,
+          "message": "转场表达正常",
+          "severity": "warning",
+          "category": "style",
+          "blocking": false,
+          "observed": 0,
+          "threshold": 3,
+          "evidence": []
+        },
+        {
+          "rule_id": "paragraph_uniformity",
+          "passed": true,
+          "message": "段落节奏有变化",
+          "severity": "warning",
+          "category": "structure",
+          "blocking": false,
+          "observed": 0.9846,
+          "threshold": 0.15,
+          "evidence": []
+        },
+        {
+          "rule_id": "hedge_word_density",
+          "passed": true,
+          "message": "模糊词密度正常",
+          "severity": "warning",
+          "category": "style",
+          "blocking": false,
+          "observed": 0.0,
+          "threshold": 3.0,
+          "evidence": []
+        },
+        {
+          "rule_id": "list_like_structure",
+          "passed": true,
+          "message": "句首变化正常",
+          "severity": "warning",
+          "category": "structure",
+          "blocking": false,
+          "observed": 1,
+          "threshold": 3,
+          "evidence": [
+            "第五"
+          ]
+        },
+        {
+          "rule_id": "surprise_marker_density",
+          "passed": true,
+          "message": "惊讶词密度正常",
+          "severity": "warning",
+          "category": "ai_tell",
+          "blocking": false,
+          "observed": 0.0,
+          "threshold": 35.0,
+          "evidence": []
+        }
+      ],
+      "blocked": false,
+      "summary_counts": {
+        "total": 12,
+        "failed": 0
+      },
+      "blocking_rule_ids": [],
+      "warning_rule_ids": [],
+      "issue_counts_by_severity": {
+        "info": 0,
+        "warning": 0,
+        "critical": 0
+      }
+    },
+    "audit": {
+      "passed": false,
+      "critical_count": 1,
+      "issues": [
+        {
+          "severity": "critical",
+          "category": "logic",
+          "description": "初稿仍需至少一轮独立修订",
+          "suggestion": "先收紧逻辑，再强化章尾钩子"
+        }
+      ],
+      "recommended_mode": "rework",
+      "score_summary": {
+        "overall": 5.08,
+        "logic": 5.0,
+        "character": 5.1,
+        "hook": 5.2,
+        "pace": 5.0
+      }
+    },
+    "gate_decision": {
+      "passed": false,
+      "overall_score": 5.08,
+      "critical_count": 1,
+      "blocked_by_mechanical": false,
+      "dimension_scores": {
+        "logic": 5.0,
+        "character": 5.1,
+        "hook": 5.2,
+        "pace": 5.0
+      },
+      "source_refs": {},
+      "reason_codes": [
+        "audit:logic",
+        "score:overall_below_threshold",
+        "score:logic_below_threshold",
+        "score:character_below_threshold",
+        "score:hook_below_threshold",
+        "score:pace_below_threshold"
+      ]
+    },
+    "style_signal": {
+      "chapter_no": 5,
+      "reference_profile_ref": "workspace-baseline",
+      "drift_score": 0.3496,
+      "dominant_drift_axes": [
+        "dialogue_density",
+        "metaphor_density",
+        "discourse_particle_presence"
+      ],
+      "recommended_action": "review"
+    },
+    "truth_probe": {
+      "fact_assertions": [
+        {
+          "fact_id": "fact-ch0005-1",
+          "category": "chapter_outcome",
+          "statement": "林默在当前章节中推进了主线行动。",
+          "hard": false,
+          "assertion_basis": "explicit"
+        }
+      ],
+      "proposed_fact_updates": [],
+      "character_updates": [],
+      "relationship_updates": [],
+      "hook_updates": [],
+      "chapter_irreversible_facts": [],
+      "notes": [
+        "workspace_read_only_probe"
+      ]
+    }
+  }
+]

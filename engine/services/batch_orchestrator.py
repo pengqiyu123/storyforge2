@@ -401,9 +401,10 @@ class BatchOrchestratorService:
     def _check_item_readiness(self, record: BatchRunRecord, item: BatchItemRecord) -> str | None:
         status = self.engine.get_chapter_status(record.book_id, item.chapter_no)["status"]
         freshness = self.engine.get_chapter_truth_freshness(record.book_id, item.chapter_no)
-        if not freshness["is_fresh"]:
-            return "stale_truth_head"
-        if status.stage.value == "invalidated":
+        if not freshness["is_fresh"] or status.stage.value == "invalidated":
+            recovered = self._auto_reset_stale_chapter(record.book_id, item)
+            if recovered:
+                return None
             return "stale_truth_head"
         if status.stage.value in {"blocked", "human_review_required"}:
             return "chapter_blocked" if status.stage.value == "blocked" else "human_review_required"
@@ -420,6 +421,37 @@ class BatchOrchestratorService:
         if item.phase == "approve" and status.stage.value != "audited_passed":
             return "chapter_not_ready"
         return None
+
+    def _auto_reset_stale_chapter(self, book_id: str, item: BatchItemRecord) -> bool:
+        status = self.engine.get_chapter_status(book_id, item.chapter_no)["status"]
+        if status.stage != "invalidated" and getattr(status.stage, "value", status.stage) != "invalidated":
+            return False
+        self.engine.reset_invalidated_chapter(book_id, item.chapter_no)
+        items = self.repo.load_batch_items(book_id, item.batch_run_id)
+        updated_items: list[BatchItemRecord] = []
+        for candidate in items:
+            if candidate.chapter_no != item.chapter_no:
+                updated_items.append(candidate)
+                continue
+            if candidate.phase in {"plan", "compose", "draft", "settle", "audit", "approve"}:
+                next_phase = candidate.phase
+                if candidate.item_id == item.item_id:
+                    next_phase = "plan"
+                updated_items.append(
+                    candidate.model_copy(
+                        update={
+                            "phase": next_phase,
+                            "status": BatchItemStatus.QUEUED,
+                            "error_summary": None,
+                            "output_refs": [],
+                            "updated_at": utc_now(),
+                        }
+                    )
+                )
+            else:
+                updated_items.append(candidate)
+        self.repo.save_batch_items(book_id, item.batch_run_id, updated_items)
+        return True
 
     def _pause_run(self, record: BatchRunRecord, items: list[BatchItemRecord], reason_code: str) -> BatchRunRecord:
         paused = record.model_copy(
