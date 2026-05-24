@@ -73,43 +73,53 @@ class BookView(Container):
         yield ListView(*items, id="chapter-list")
 
 
-class StudioApp(App):
-    BINDINGS = [
-        Binding("q", "quit", "Quit"),
-        Binding("r", "refresh", "Refresh"),
-    ]
+def _make_studio_app() -> type:
+    """Factory to create StudioApp only when textual is available."""
+    if not TEXTUAL_AVAILABLE:
+        return None
 
-    CSS = """
-    .title {
-        text-style: bold;
-        padding: 1;
-    }
-    ListView {
-        height: 100%;
-    }
-    ListItem {
-        padding: 1;
-    }
-    """
+    class _StudioApp(App):
+        BINDINGS = [
+            Binding("q", "quit", "Quit"),
+            Binding("r", "refresh", "Refresh"),
+        ]
 
-    def __init__(self, root: Path) -> None:
-        super().__init__()
-        self.root = root
-        self.store = JsonStateStore(root)
-        self.book_id: str | None = None
+        CSS = """
+        .title {
+            text-style: bold;
+            padding: 1;
+        }
+        ListView {
+            height: 100%;
+        }
+        ListItem {
+            padding: 1;
+        }
+        """
 
-    def compose(self) -> ComposeResult:
-        yield Header()
-        books = self.store.list_books()
-        if books:
-            self.book_id = books[0].book_id
-            yield BookView(self.store, self.book_id)
-        else:
-            yield Label("No books found")
-        yield Footer()
+        def __init__(self, root: Path) -> None:
+            super().__init__()
+            self.root = root
+            self.store = JsonStateStore(root)
+            self.book_id: str | None = None
 
-    def action_refresh(self) -> None:
-        self.refresh()
+        def compose(self) -> ComposeResult:
+            yield Header()
+            books = self.store.list_books()
+            if books:
+                self.book_id = books[0].book_id
+                yield BookView(self.store, self.book_id)
+            else:
+                yield Label("No books found")
+            yield Footer()
+
+        def action_refresh(self) -> None:
+            self.refresh()
+
+    return _StudioApp
+
+
+StudioApp = _make_studio_app()
 
 
 def run_studio(root: Path) -> None:
